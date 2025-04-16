@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-x7nj1fz%z_a-04@bkyq!^0x@zl4%+fn2ze^v-h4hcgso9!1=h@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['ghani-travels.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -65,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'myproject.wsgi.application'
+WSGI_APPLICATION = 'myproject.wsgi:application'
 
 # Database Configuration (Using SQLite or PostgreSQL)
 DATABASES = {
