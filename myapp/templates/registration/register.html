@@ -1,0 +1,461 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghani Travel - Sign Up</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: rgb(0, 4, 240);
+            --secondary: rgb(12, 0, 245);
+            --accent: #ff4757;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --error:rgb(247, 4, 4);
+            --Ghani: rgb(36, 247, 8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg,rgb(215, 232, 250),rgba(22, 22, 22, 0.69));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            {% comment %} overflow: hidden; {% endcomment %}
+            animation: backgroundAnimation 10s infinite;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background:rgba(44, 44, 44, 0.62); }
+            25% { background:rgba(60, 247, 238, 0.4); }
+            50% { background:rgba(0, 34, 68, 0.48); }
+            75% { background:rgb(106, 248, 101); }
+            100% { background:rgba(238, 59, 229, 0.4); }
+        }
+
+        /* Floating background animation */
+        .floating-bg {
+            position: absolute;
+            width: 10px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+            filter: blur(40px);
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 100px) rotate(90deg); }
+            50% { transform: translate(0, 200px) rotate(180deg); }
+            75% { transform: translate(-100px, 100px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        /* Signup Container */
+        .signup-container {
+            background: rgba(12, 12, 12, 0.63);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgb(19, 3, 163);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out forwards;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .signup-container:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgb(241, 4, 24);
+        }
+
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            position: relative;
+            animation: neonText 1.5s infinite alternate;
+        }
+
+        @keyframes neonText {
+            0% { text-shadow: 0 0 10px var(--secondary); }
+            100% { text-shadow: 0 0 20px var(--secondary); }
+        }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            font-weight: 500;
+            font-style: bold;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem 2.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgb(32, 248, 3);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            transition: color 0.3s ease;
+        }
+
+        .form-group input:focus::placeholder {
+            color: transparent;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.97);
+            transition: color 0.3s ease;
+        }
+
+        .form-group input:focus + .input-icon {
+            color: var(--primary);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--accent);
+        }
+
+        /* Error Messages */
+        .error-message {
+            color: var(--error);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        /* Button Styles */
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--light);
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        button:hover::after {
+            transform: rotate(45deg) translateX(100%);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            color: black;
+            font-size: 1.5em;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Login Link */
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--light);
+        }
+
+        .login-link a {
+            color: var(--Ghani);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            position: relative;
+        }
+
+        .login-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .login-link a:hover::after {
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .signup-container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% if form.errors %}
+    <div class="error-message" style="display: block;">
+        <strong>Fix these errors:</strong>
+        <ul>
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div class="floating-bg" style="top: 10%; left: 20%"></div>
+    <div class="floating-bg" style="top: 70%; left: 70%"></div>
+    <div class="floating-bg" style="top: 40%; left: 80%"></div>
+
+    <div class="signup-container">
+        <h1>Create Your Account</h1>
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_first_name">First Name</label>
+                <div class="input-wrapper">
+                    <input type="text" id="first_name" name="first_name" 
+                           value="{{ form.first_name.value|default:'' }}"
+                           placeholder="Enter first name" required>
+                </div>
+                {% if form.first_name.errors %}
+                <div class="error-message" style="display: block;">
+                    {% for error in form.first_name.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_last_name">Last Name</label>
+                <div class="input-wrapper">
+                    <input type="text" id="last_name" name="last_name" 
+                           value="{{ form.last_name.value|default:'' }}"
+                           placeholder="Enter last name" required>
+                </div>
+                {% if form.last_name.errors %}
+                <div class="error-message" style="display: block;">
+                    {% for error in form.last_name.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="id_email">Email Address</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="id_email" name="email" 
+                           value="{{ form.email.value|default:'' }}"
+                           placeholder="ghani@example.com" required>
+                </div>
+                {% if form.email.errors %}
+                <div class="error-message" style="display: block;">
+                    {% for error in form.email.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Phone Field -->
+            <div class="form-group">
+                <label for="id_phone_number">Phone Number</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-phone input-icon"></i>
+                    <input type="tel" id="id_phone_number" name="phone_number" 
+                           value="{{ form.phone_number.value|default:'' }}"
+                           placeholder="+1 234 567 890" required>
+                </div>
+                {% if form.phone_number.errors %}
+                <div class="error-message" style="display: block;">
+                    {% for error in form.phone_number.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Password Fields -->
+            <div class="form-group">
+                <label for="id_password1">Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="id_password1" name="password1" 
+                           placeholder="••••••••" required>
+                    <i class="fas fa-eye password-toggle" 
+                       onclick="togglePassword('id_password1')"></i>
+                </div>
+                {% if form.password1.errors %}
+                <div class="error-message" style="display: block;">
+                    {% for error in form.password1.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password2">Confirm Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="id_password2" name="password2" 
+                           placeholder="••••••••" required>
+                    <i class="fas fa-eye password-toggle" 
+                       onclick="togglePassword('id_password2')"></i>
+                </div>
+                {% if form.password2.errors %}
+                <div class="error-message" style="display: block;">
+                    {% for error in form.password2.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+        
+        <div class="login-link">
+            <p>Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const toggleIcon = field.parentElement.querySelector('.password-toggle');
+            
+            field.type = field.type === 'password' ? 'text' : 'password';
+            toggleIcon.classList.toggle('fa-eye-slash');
+        }
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            let isValid = true;
+            const errors = [];
+            
+            // Name validation
+            const name = document.getElementById('id_name');
+            if (!/^[a-zA-Z ]{2,30}$/.test(name.value.trim())) {
+                errors.push('Please enter a valid name (2-30 characters)');
+            }
+
+            // Email validation
+            const email = document.getElementById('id_email');
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                errors.push('Please enter a valid email address');
+            }
+
+            // Phone validation
+            const phone = document.getElementById('id_phone_number');
+            if (!/^\+?[0-9\s\-\(\)]{7,15}$/.test(phone.value)) {
+                errors.push('Please enter a valid phone number');
+            }
+
+            // Password validation
+            const password1 = document.getElementById('id_password1');
+            const password2 = document.getElementById('id_password2');
+            
+            if (password1.value.length < 8) {
+                errors.push('Password must be at least 8 characters');
+            } else if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(password1.value)) {
+                errors.push('Password must contain uppercase, lowercase, and numbers');
+            }
+            
+            if (password1.value !== password2.value) {
+                errors.push('Passwords do not match');
+            }
+
+            if (errors.length > 0) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    html: errors.join('<br>')
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghani Travels - Explore the World</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #2A2A72;
+            --secondary: #009FFD;
+            --accent: #FFA400;
+            --dark: #0A0A2E;
+            --light: #F4F6FF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom right, var(--dark), var(--primary));
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .parallax {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url("{% static 'images/travel-bg.jpg' %}") fixed center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(255,164,0,0.5);
+        }
+
+        .search-bar {
+            margin: 2rem auto;
+            max-width: 600px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            padding: 0.5rem;
+            display: flex;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: var(--light);
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .search-btn {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .packages {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .package-card {
+            background: var(--light);
+            color: var(--dark);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .package-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(255,164,0,0.3);
+        }
+
+        .package-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .newsletter {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .newsletter input[type="email"] {
+            padding: 1rem;
+            border-radius: 50px 0 0 50px;
+            border: none;
+            width: 300px;
+        }
+
+        .newsletter button {
+            padding: 1rem 2rem;
+            border-radius: 0 50px 50px 0;
+            border: none;
+            background: var(--accent);
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#packages">Packages</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+        </ul>
+    </nav>
+
+    <section class="parallax">
+        <div class="hero animate__animated animate__fadeIn">
+            <h1>Discover Your Next Adventure</h1>
+            <p>Explore the world with our curated travel experiences</p>
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search destinations...">
+                <button class="search-btn">Explore</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="services">
+        <div class="feature-card animate__animated animate__slideInLeft">
+            <h3>✈️ Best Prices Guaranteed</h3>
+            <p>We promise the lowest rates for all our premium packages</p>
+        </div>
+        <div class="feature-card animate__animated animate__slideInUp">
+            <h3>🛡️ Travel Protection</h3>
+            <p>24/7 support and comprehensive travel insurance</p>
+        </div>
+        <div class="feature-card animate__animated animate__slideInRight">
+            <h3>🌟 Premium Experiences</h3>
+            <p>Curated itineraries with unique local experiences</p>
+        </div>
+    </section>
+
+    <section class="packages" id="packages">
+        <h2>Featured Travel Packages</h2>
+        <div class="package-grid">
+            <div class="package-card">
+                <div class="package-image" style="background-image: url({% static 'images/europe.jpg' %})"></div>
+                <div class="package-info">
+                    <h3>European Explorer</h3>
+                    <p>10 Countries in 14 Days</p>
+                    <p class="price">$2999</p>
+                    <button class="view-details">View Details</button>
+                </div>
+            </div>
+            <!-- Add more package cards -->
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <h2>Stay Updated with Travel Deals</h2>
+        <form id="newsletter-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Newsletter submission
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Subscribed!',
+                text: 'You'll receive our best travel deals',
+                icon: 'success',
+                confirmButtonText: 'Awesome!'
+            });
+        });
+
+        // Package card interactions
+        document.querySelectorAll('.view-details').forEach(button => {
+            button.addEventListener('click', () => {
+                Swal.fire({
+                    title: 'Package Details',
+                    html: `<div class="package-modal">
+                            <h4>Detailed Itinerary</h4>
+                            <ul>
+                                <li>Day 1: Arrival & Welcome Dinner</li>
+                                <li>Day 2-5: City Tours & Cultural Experiences</li>
+                                <li>Day 6-10: Adventure Activities</li>
+                                <li>Day 11-14: Leisure Time & Departure</li>
+                            </ul>
+                            <button class="book-now">Book Now</button>
+                          </div>`,
+                    showConfirmButton: false
+                });
+            });
+        });
+    </script>
+</body>
+</html>

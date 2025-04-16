@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghani-Travels</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: url("{% static 'images/travel-abstract-background-with-transport-and-nature-trip-backdrop-generative-ai-photo.jpeg' %}");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Grid Background Animation */
+        .grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+            animation: moveGrid 10s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(59, 130, 246, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            animation: neonBorder 3s infinite, glow 3s infinite;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+        }
+
+        @keyframes neonBorder {
+            0% { border-color: rgba(59, 130, 246, 0.6); }
+            50% { border-color: rgba(59, 130, 246, 0.8); }
+            100% { border-color: rgba(59, 130, 246, 0.6); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+        }
+
+        /* Heading Styles */
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            color: #f8f4f4;
+            text-shadow:
+                0 0 10px rgb(17, 0, 255),
+                0 0 20px rgb(55, 0, 255),
+                0 0 40px rgb(98, 0, 255),
+                0 0 80px rgb(55, 0, 255);
+        }
+
+        /* Paragraph Styles */
+        .hero p {
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            color: #f8f4f4;
+            text-shadow:
+                0 0 10px rgb(17, 0, 255),
+                0 0 20px rgb(55, 0, 255),
+                0 0 40px rgb(98, 0, 255),
+                0 0 80px rgb(55, 0, 255);
+        }
+
+        /* Call-to-Action Button */
+        .cta-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: #ffcc0070;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background: #0004e6;
+            color: #fff;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Grid Background Animation -->
+    <div class="grid-background"></div>
+
+    <!-- Hero Section -->
+    <header>
+        <div class="hero">
+            <h1>Welcome to Ghani Travels</h1>
+            <p>Your gateway to reliable and comfortable travel experiences.</p>
+            <a href="{% url 'login' %}" class="cta-btn">Explore Now</a>
+        </div>
+    </header>
+</body>
+</html>

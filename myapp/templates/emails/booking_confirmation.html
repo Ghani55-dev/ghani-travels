@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .header { background-color: #004085; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; }
+        .ticket { background: #f8f9fa; border: 1px dashed #004085; padding: 15px; margin: 15px 0; }
+        .footer { background-color: #f1f1f1; padding: 10px; text-align: center; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Ghani Travels</h2>
+        <p>Booking Confirmation</p>
+    </div>
+    
+    <div class="content">
+        <p>Dear {{ booking.user.get_full_name }},</p>
+        <p>Thank you for booking with Ghani Travels. Here are your booking details:</p>
+        
+        <div class="ticket">
+            <h3>Booking Reference: {{ ticket_number }}</h3>
+            <p><strong>Tour Package:</strong> {{ booking.tour_package.title }}</p>
+            <p><strong>Travel Dates:</strong> {{ booking.start_date|date:"M d, Y" }} to {{ booking.end_date|date:"M d, Y" }}</p>
+            <p><strong>Passengers:</strong> {{ booking.passengers }}</p>
+            <p><strong>Total Amount:</strong> ₹{{ booking.total_price }}</p>
+        </div>
+        
+        <p>You can view your ticket anytime at:<br>
+        <a href="http://{{ domain }}{% url 'view_ticket' %}?booking_id={{ booking.id }}">
+            View Your Ticket
+        </a></p>
+    </div>
+    
+    <div class="footer">
+        <p>Need assistance? Contact our support team at support@ghanitravels.com</p>
+        <p>© {% now "Y" %} Ghani Travels. All rights reserved.</p>
+    </div>
+</body>
+</html>

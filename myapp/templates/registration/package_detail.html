@@ -1,0 +1,280 @@
+{% load static %}
+{% block content %}
+
+<center>
+    <div class="container mt-4">
+        <h1 class="header-title animate-pop-in">{{ package.title }}</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Package Details Card -->
+                <div class="card mb-4 package-card animate-slide-in-left">
+                    <div class="card-body">
+                        <h5 class="card-title">Package Details</h5>
+                        <p class="card-text">
+                            🗺️ <span class="highlight">Destination:</span> {{ package.destination }}<br>
+                            ⏳ <span class="highlight">Duration:</span> {{ package.duration_days }} days<br>
+                            💰 <span class="highlight">Price:</span> ₹{{ package.price }} per person<br>
+                            📅 <span class="highlight">Available From:</span> {{ package.start_date|date:"F j, Y" }}
+                        </p>
+                        <button class="btn-neon"><a href="{% url 'book_package' package.id %}" class="link-3d">Book Now</a></button>
+                        <button class="btn-neon"><a href="{% url 'add_review' package.id %}" class="link-3d">Write a Review</a></button>
+                    </div>
+                </div>
+
+                <!-- Reviews Section -->
+                <div class="card review-card animate-slide-in-right">
+                    <div class="card-header">
+                        <h5 class="review-title">Reviews ({{ reviews.count }})</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if reviews %}
+                            {% for review in reviews %}
+                            <div class="mb-3 review-item animate-fade-in">
+                                <strong class="review-user">{{ review.user.get_full_name }}</strong>
+                                <div class="text-warning review-stars">
+                                    {% for _ in "x"|rjust:review.rating %}
+                                    ★
+                                    {% endfor %}
+                                </div>
+                                <p class="review-comment">{{ review.comment }}</p>
+                                <small class="text-muted review-time">{{ review.created_at|timesince }} ago</small>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="no-reviews animate-fade-in">No reviews yet. Be the first to review!</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 package-card animate-slide-in-right">
+            <div class="card-body">
+                <h5 class="card-title">Other Packages</h5>
+                <p class="card-text">Check out these amazing packages:</p>
+                <ul class="list-group">
+                    {% for other_package in other_packages %}
+                    <li class="list-group-item">
+                        <a href="{% url 'package_detail' other_package.id %}" class="package-link">
+                            {{ other_package.title }} - ₹{{ other_package.price }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<button class="btn-neon"><a href="{% url 'package_detail' package.id %}" class="link-3d">
+    <span class="icon">★</span> View Details
+</a></button>
+</center>
+
+{% endblock %}
+
+
+<style>
+    .link-3d {
+        color: black;
+        text-decoration: none;
+        padding: 5px 10px;
+        position: relative;
+        transition: transform 0.3s ease;
+    }
+
+    .link-3d::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        background: #333;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .link-3d:hover {
+        transform: translateY(-2px);
+        color: white;
+    }
+
+    .link-3d:hover::before {
+        transform: scaleX(1);
+    }
+
+
+
+    .btn-neon {
+        background: #222;
+        border: 2px solid #00ffcc;
+        color: #00ffcc;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-neon:hover {
+        background: #00ffcc;
+        color: #222;
+        box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 40px #00ffcc;
+    }
+    /* Global Styles */
+    body {
+        background: linear-gradient(-45deg,rgb(4, 1, 49),rgb(8, 1, 48),rgba(14, 1, 68, 0.64),rgb(1, 56, 1));
+        background-size: 400% 400%;
+        animation: gradientBG 10s ease infinite;
+        color: white;
+        font-family: 'Arial', sans-serif;
+    }
+
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Header and Titles */
+    .header-title, .review-title {
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #ff5733;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-title.animate-pop-in {
+        animation: popIn 0.8s ease-out;
+    }
+
+    @keyframes popIn {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Cards */
+    .package-card, .review-card {
+        background: rgba(5, 238, 255, 0.55);
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+        margin: 20px;
+        width: 40em;
+        transition: transform 0.3s ease-in-out, background 0.3s;
+    }
+
+    .package-card:hover, .review-card:hover {
+        transform: scale(1.05);
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .package-card.animate-slide-in-left {
+        animation: slideInLeft 0.8s ease-out;
+    }
+
+    .review-card.animate-slide-in-right {
+        animation: slideInRight 0.8s ease-out;
+    }
+
+    @keyframes slideInLeft {
+        0% { transform: translateX(-100%); opacity: 0; }
+        100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+        0% { transform: translateX(100%); opacity: 0; }
+        100% { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Buttons */
+    .btn-animated {
+        transition: all 0.3s ease-in-out;
+        margin: 5px;
+    }
+
+    .btn-animated:hover {
+        background-color: #ff5733;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    /* Reviews */
+    .review-item {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .review-item:hover {
+        transform: translateX(10px);
+    }
+
+    .review-item.animate-fade-in {
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    .review-user {
+        font-weight: bold;
+        color:rgb(226, 2, 2);
+    }
+
+    .review-stars {
+        font-size: 1.2em;
+        color: #ffdd57;
+    }
+
+    .review-comment {
+        font-style: italic;
+    }
+
+    .review-time {
+        font-size: 0.8em;
+    }
+
+    .no-reviews {
+        color: #ffdd57;
+        font-weight: bold;
+    }
+
+    /* Links */
+    a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    /* Additional Styles for Other Packages Section */
+    .package-link {
+        color: #ff5733;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .package-link:hover {
+        color:rgb(3, 235, 252);
+        text-decoration: underline;
+    }
+
+    .list-group-item {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .list-group-item:hover {
+        transform: translateX(10px);
+    }
+</style>

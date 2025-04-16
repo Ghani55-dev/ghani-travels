@@ -1,0 +1,422 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment - Ghani Travels</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --hover: #2980b9;
+            --error: #e74c3c;
+            --success: #2ecc71;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #1a2980, #26d0ce);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .payment-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 600px;
+            animation: containerEntrance 0.6s ease-out;
+        }
+
+        @keyframes containerEntrance {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .payment-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .payment-header h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-header p {
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        select:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .payment-method {
+            position: relative;
+        }
+
+        .payment-method input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .payment-method label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 1rem;
+            background: white;
+            border-radius: 12px;
+            border: 2px solid #eee;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method input[type="radio"]:checked + label {
+            border-color: var(--secondary);
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        .payment-method label:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .method-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 0.5rem;
+            object-fit: contain;
+        }
+
+        .stripe-element {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .pay-button {
+            width: 100%;
+            padding: 15px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .pay-button:hover {
+            background: var(--hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .alert-error {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        #card-errors {
+            color: #e74c3c;
+            margin: 15px 0;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .payment-container {
+                padding: 1.5rem;
+            }
+            
+            .payment-methods {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-header">
+            <h1>Complete Your Booking</h1>
+            <p>Select your payment method</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <form id="payment-form">
+            {% csrf_token %}
+            
+            <div class="ticket-selection">
+                <div class="form-group">
+                    <label for="ticket_type">Ticket Type</label>
+                    <select name="ticket_type" id="ticket_type" required>
+                        <option value="general" {% if ticket_type == 'general' %}selected{% endif %}>General Admission - ₹500</option>
+                        <option value="vip" {% if ticket_type == 'vip' %}selected{% endif %}>VIP - ₹1000</option>
+                        <option value="premium" {% if ticket_type == 'premium' %}selected{% endif %}>Premium - ₹1500</option>
+                    </select>
+                </div>
+            </div>
+
+            <h3>Payment Method</h3>
+            <div class="payment-methods">
+                {% for value, name in payment_methods %}
+                <div class="payment-method">
+                    <input type="radio" name="payment_method" id="{{ value }}" value="{{ value }}" required {% if selected_method == value %}checked{% endif %}>
+                    <label for="{{ value }}">
+                        {% if value == 'card' %}
+                        <img src="https://img.icons8.com/color/96/000000/visa.png" alt="Cards" class="method-icon">
+                        {% elif value == 'phonepay' %}
+                        <img src="{% static 'images/download.png' %}" alt="PhonePe" class="method-icon">
+                        {% elif value == 'gpay' %}
+                        <img src="https://img.icons8.com/color/96/000000/google-pay.png" alt="GPay" class="method-icon">
+                        {% elif value == 'paytm' %}
+                        <img src="https://img.icons8.com/color/96/000000/paytm.png" alt="Paytm" class="method-icon">
+                        {% endif %}
+                        <span>{{ name }}</span>
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Stripe Card Element -->
+            <div id="card-element" class="stripe-element" style="display: none;"></div>
+            
+            <!-- Display errors -->
+            <div id="card-errors" role="alert"></div>
+
+            <button type="submit" class="pay-button" id="submit-button">
+                Proceed to Payment
+            </button>
+        </form>
+    </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // Initialize Stripe with your publishable key
+        const stripe = Stripe('{{ stripe_public_key }}');
+        let elements;
+        let card;
+        let isProcessing = false;
+
+        // Initialize Stripe Elements if card is selected
+        function initializeStripe() {
+            if (!card) {
+                elements = stripe.elements();
+                card = elements.create('card', {
+                    style: {
+                        base: {
+                            fontSize: '16px',
+                            color: '#32325d',
+                            '::placeholder': {
+                                color: '#aab7c4'
+                            }
+                        },
+                        invalid: {
+                            color: '#fa755a'
+                        }
+                    }
+                });
+                card.mount('#card-element');
+                
+                card.addEventListener('change', function(event) {
+                    const displayError = document.getElementById('card-errors');
+                    displayError.textContent = event.error ? event.error.message : '';
+                });
+            }
+        }
+
+        // Handle payment method selection changes
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const cardElement = document.getElementById('card-element');
+                if (this.value === 'card') {
+                    cardElement.style.display = 'block';
+                    initializeStripe();
+                } else {
+                    cardElement.style.display = 'none';
+                    document.getElementById('card-errors').textContent = '';
+                }
+            });
+        });
+
+        // Handle form submission
+        document.getElementById('payment-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            const submitButton = document.getElementById('submit-button');
+            const errorElement = document.getElementById('card-errors');
+            const paymentMethod = document.querySelector('input[name="payment_method"]:checked');
+            
+            if (!paymentMethod) {
+                errorElement.textContent = 'Please select a payment method';
+                isProcessing = false;
+                return;
+            }
+        
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processing...';
+            errorElement.textContent = '';
+        
+            try {
+                if (paymentMethod.value === 'card') {
+                    // Handle Stripe payment
+                    const {error, paymentIntent} = await stripe.confirmCardPayment('{{ client_secret }}', {
+                        payment_method: { card: card }
+                    });
+                    if (error) throw error;
+                    
+                    const response = await fetch('/payment/process/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            payment_intent_id: paymentIntent.id,
+                            payment_method: 'card'
+                        })
+                    });
+                    
+                    if (!response.ok) throw new Error('Payment processing failed');
+                    window.location.href = '/payment/success/';
+                } else {
+                    // For UPI payments, redirect to UPI page
+                    const response = await fetch('/payment/save_upi_session/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            payment_method: paymentMethod.value
+                        })
+                    });
+                    
+                    if (!response.ok) throw new Error('Could not initialize payment');
+                    window.location.href = '/payment/upi/';
+                }
+            } catch (error) {
+                errorElement.textContent = error.message;
+                submitButton.disabled = false;
+                submitButton.textContent = 'Proceed to Payment';
+                isProcessing = false;
+            }
+        });
+
+        // Helper function to process payment
+        async function processPayment(data) {
+            return await fetch('/payment/process/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(data)
+            });
+        }
+
+        // Initialize on page load if card is selected
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+            if (selectedMethod && selectedMethod.value === 'card') {
+                document.getElementById('card-element').style.display = 'block';
+                initializeStripe();
+            }
+        });
+        // In your payment template
+        async function processPayment() {
+            try {
+                const response = await fetch('/payment/process/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        // Your payment data here
+                    })
+                });
+        
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Handle success
+                    window.location.href = `/payment/success/?ticket_id=${data.ticket_id}`;
+                } else {
+                    throw new Error(data.error || 'Payment failed');
+                }
+            } catch (error) {
+                showError(error.message);
+                console.error('Payment error:', error);
+            }
+        }
+
+// Attach event listener
+document.getElementById('payment-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    processPayment();
+});
+    </script>
+</body>
+</html>

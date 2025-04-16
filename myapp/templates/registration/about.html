@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <style>
+        :root {
+            --primary: #004080;
+            --secondary: #003366;
+            --accent: #ff4757;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #004080, #003366);
+            background-image: url("{% static 'images/pngtree-transportation-airplane-bicycle-cars-photo-picture-image_6703777.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            color: var(--light);
+            animation: backgroundAnimation 10s infinite;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-color: #004080; }
+            25% { background-color: #003366; }
+            50% { background-color: #002244; }
+            75% { background-color: #001122; }
+            100% { background-color: #004080; }
+        }
+
+        /* Floating background animation */
+        .floating-bg {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+            filter: blur(40px);
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 100px) rotate(90deg); }
+            50% { transform: translate(0, 200px) rotate(180deg); }
+            75% { transform: translate(-100px, 100px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+.about-section {
+    padding: 50px;
+    background: #00000044;
+    text-align: center;
+   margin-left: 10%;
+   margin-right: 10%;
+}
+
+.about-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #f8f4f4;
+            text-shadow:
+            0 0 10px rgb(17, 0, 255),
+            0 0 20px rgb(55, 0, 255),
+            0 0 40px rgb(98, 0, 255),
+            0 0 80px rgb(55, 0, 255);
+}
+
+.about-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.about-image img {
+    width: 90%;
+    max-width: 300px;
+    border-radius: 10px;
+    border-bottom: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.075);
+}
+
+.about-content {
+    max-width: 600px;
+    text-align: left;
+}
+
+.about-content p {
+    font-size: 1.1em;
+    color:rgb(4, 236, 253);
+    line-height: 1.8em;
+    margin-bottom: 20px;
+}
+
+.about-content h3 {
+    font-size: 1.5em;
+    color: #f8f4f4;
+    text-shadow:
+    0 0 10px rgb(17, 0, 255),
+    0 0 20px rgb(55, 0, 255),
+    0 0 40px rgb(98, 0, 255),
+    0 0 80px rgb(55, 0, 255);
+    margin-bottom: 10px;
+}
+.about-content ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.about-content ul li {
+    font-size: 1em;
+    color: #000000;
+    text-shadow:
+    0 0 10px rgb(255, 255, 255),
+    0 0 20px rgb(253, 252, 253),
+    0 0 40px rgb(255, 255, 255),
+    0 0 80px rgb(252, 251, 255);
+    margin-bottom: 8px;
+}
+.p1{
+    color: rgb(255, 255, 255);
+    background-color: #242424;
+}
+
+.about-container {
+    
+    animation: fadeIn 1s ease-in-out;
+}
+
+
+.glass-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 800px;
+    width: 90%;
+    text-align: center;
+    margin: 20px;
+    z-index: 1;
+}
+
+.about-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--light);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    font-size: 2em;
+    {% comment %} color: #f8f4f4;
+    text-shadow:
+    0 0 10px rgb(17, 0, 255),
+    0 0 20px rgb(55, 0, 255),
+    0 0 40px rgb(98, 0, 255),
+    0 0 80px rgb(55, 0, 255);
+    margin-bottom: 10px; {% endcomment %}
+}
+
+.mission-text {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    margin-bottom: 30px;
+}
+
+.mission-text strong {
+    color: var(--accent);
+}
+
+.team-heading {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--light);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.team-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.team-member {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.glow-button {
+    background: linear-gradient(135deg, var(--accent), #ffcc00);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    color: var(--light);
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 111, 97, 0.6);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glow-button:hover {
+    box-shadow: 0 0 40px rgba(255, 111, 97, 0.8), 0 0 60px rgba(255, 204, 0, 0.6);
+    transform: scale(1.05);
+}
+
+    </style>
+</head>
+<body>
+   
+    <div class="glass-container">
+        <h1 class="about-heading">About {{ about_info.company_name }}</h1>
+        <p class="mission-text"><strong>Mission:</strong> {{ about_info.mission }}</p>
+        <h2 class="team-heading">Our Team</h2>
+        <ul class="team-list">
+            {% for member in about_info.team %}
+            <li class="team-member">{{ member.name }} - {{ member.role }}</li>
+            {% endfor %}
+        </ul>
+        <button class="glow-button">Learn More</button>
+    </div>
+    <section id="about" class="about-section">
+        <h2>Travels</h2>
+        <div class="about-container">
+            <div class="about-image">
+                <img src="{% static 'images/moving-forward-bus-travels-on-road-embracing-travel-time-ambiance-ai-generated-photo.jpg' %}" alt="Ghani Travels Luxury Bus"><br><br><br><br><br><br><br><br><br>
+                <img src="{% static 'images/depositphotos_209411922-stock-photo-image-modern-bus-interior-rows.jpg' %}" alt="Ghani Travels Luxury Bus">
+            </div>
+            <div class="about-content">
+                <p>
+                    Ghani Travels is a premier transportation service provider, committed to delivering reliable, comfortable, and affordable travel solutions across Pakistan. Established in 2005, we have grown to become one of the most trusted names in the travel industry, serving thousands of customers every month.
+                </p>
+                <h3>Our Mission</h3>
+                <p>
+                    To make travel a seamless and enjoyable experience by offering high-quality transportation services, backed by cutting-edge technology and exceptional customer care.
+                </p>
+                <h3>Our Vision</h3>
+                <p>
+                    To be a leading travel company in Pakistan, setting benchmarks in service quality, safety, and innovation while making travel accessible for everyone.
+                </p>
+                <h3>Why Choose Us?</h3>
+                <ul>
+                    <li>Modern and well-maintained fleet of buses.</li>
+                    <li>Wide network of routes covering major cities and remote areas.</li>
+                    <li>Affordable and transparent pricing with no hidden charges.</li>
+                    <li>24/7 customer support and real-time bus tracking.</li>
+                    <li>Experienced drivers and staff ensuring safety and comfort.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="p1">
+        <p>Plan Your Next Adventure Today!
+            Let Ghani Travels help you turn your travel dreams into reality.
+            👉 Contact us now for exciting packages and exclusive offers!
+            
+            💼 Email: contact@ghanitravels.com
+            📞 Phone: +91-8978941065
+            🌐 Website: www.ghanitravels.com</p></div>
+    </section>
+    
+</body>
+</html>

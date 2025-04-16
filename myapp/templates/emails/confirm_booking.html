@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .header { background-color: #004085; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; }
+        .ticket { background: #f8f9fa; border: 1px dashed #004085; padding: 15px; margin: 15px 0; }
+        .footer { background-color: #f1f1f1; padding: 10px; text-align: center; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h3>Confirm Your Booking</h3>
+        </div>
+        <div class="card-body">
+            <h4>Booking Details</h4>
+            <dl class="row">
+                <dt class="col-sm-3">Package:</dt>
+                <dd class="col-sm-9">{{ booking.tour_package.title }}</dd>
+                
+                <dt class="col-sm-3">Dates:</dt>
+                <dd class="col-sm-9">{{ booking.start_date|date:"M d, Y" }} - {{ booking.end_date|date:"M d, Y" }}</dd>
+                
+                <dt class="col-sm-3">Passengers:</dt>
+                <dd class="col-sm-9">{{ booking.passengers }}</dd>
+                
+                <dt class="col-sm-3">Total Price:</dt>
+                <dd class="col-sm-9">₹{{ booking.total_price }}</dd>
+            </dl>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fas fa-check-circle"></i> Confirm Booking
+                    </button>
+                    <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-outline-danger">
+                        Cancel Booking
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

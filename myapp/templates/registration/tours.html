@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghani Travels - Tours</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f9f9f9;
+    background-image: url("{% static 'images/pngtree-transportation-airplane-bicycle-cars-photo-picture-image_6703777.jpg' %}");
+}
+
+header {
+    background: #004080;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header .logo span {
+    color: #ff5500;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 15px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.hero {
+    text-align: center;
+    background: linear-gradient(135deg, #0040802d, #003366);
+    color: white;
+    padding: 50px 20px;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.tours {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.tour {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    padding: 15px;
+    text-align: center;
+}
+
+.tour img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.tour h2 {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #004080;
+}
+
+.tour p {
+    font-size: 14px;
+    margin: 10px 0 20px;
+    color: #555;
+}
+
+.tour button {
+    padding: 10px 15px;
+    background: #004080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tour button:hover {
+    background: #ff5500;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #004080;
+    color: white;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Ghani <span>Travels</span></div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Explore Our Latest Tours</h1>
+            <p>Find the perfect tour package for your next adventure!</p>
+        </section>
+
+        <section class="tours">
+            <article class="tour">
+                <img src="{% static 'images/eiffel-tower-paris-france-EIFFEL0217-6ccc3553e98946f18c893018d5b42bde.jpg' %}" alt="Eiffel Tower in Paris">
+                <h2>Paris - City of Love</h2>
+                <p>Experience the magic of Paris with guided tours of the Eiffel Tower, Louvre Museum, and Seine River cruises.</p>
+                <button>Learn More</button>
+            </article>
+            <article class="tour">
+                <img src="{% static 'images/xlarge_swimming_pool_family_beach_villa_baglioni_resort_maldives_b440feeff9.jpg' %}" alt="Maldives Beach">
+                <h2>Maldives - Tropical Paradise</h2>
+                <p>Relax on pristine beaches, explore vibrant coral reefs, and enjoy luxurious resorts in the Maldives.</p>
+                <button>Learn More</button>
+            </article>
+            <article class="tour">
+                <img src="{% static 'images/88071_banner.jpg' %}" alt="Burj Khalifa in Dubai">
+                <h2>Dubai - Modern Marvels</h2>
+                <p>Discover the futuristic skyline, desert safaris, and world-class shopping experiences in Dubai.</p>
+                <button>Learn More</button>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Ghani Travels. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

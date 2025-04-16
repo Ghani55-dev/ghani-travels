@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Successful</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+        :root {
+            --glow-color-1: #00ff9d;
+            --glow-color-2: #00b8ff;
+            --glow-color-3: #ff00e4;
+            --glow-color-4: #ff5100;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .success-container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .success-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .success-container:hover::before {
+            transform: translateX(100%);
+        }
+
+        .success-container h1 {
+            color:rgb(40, 240, 0);
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .success-container p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .success-container button {
+            position: relative;
+            background: transparent;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .success-container button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--glow-color-1), var(--glow-color-2));
+            z-index: -1;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .success-container button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .success-container button:hover::before {
+            background: linear-gradient(45deg, var(--glow-color-3), var(--glow-color-4));
+            animation: glow 1.5s ease infinite;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px var(--glow-color-1), 0 0 20px var(--glow-color-1); }
+            25% { box-shadow: 0 0 5px var(--glow-color-2), 0 0 20px var(--glow-color-2); }
+            50% { box-shadow: 0 0 5px var(--glow-color-3), 0 0 20px var(--glow-color-3); }
+            75% { box-shadow: 0 0 5px var(--glow-color-4), 0 0 20px var(--glow-color-4); }
+            100% { box-shadow: 0 0 5px var(--glow-color-1), 0 0 20px var(--glow-color-1); }
+        }
+
+        /* Floating particles background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Neon border animation */
+        .success-container {
+            animation: borderGlow 6s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { box-shadow: 0 0 10px var(--glow-color-1), inset 0 0 10px var(--glow-color-1); }
+            25% { box-shadow: 0 0 15px var(--glow-color-2), inset 0 0 15px var(--glow-color-2); }
+            50% { box-shadow: 0 0 20px var(--glow-color-3), inset 0 0 20px var(--glow-color-3); }
+            75% { box-shadow: 0 0 15px var(--glow-color-4), inset 0 0 15px var(--glow-color-4); }
+            100% { box-shadow: 0 0 10px var(--glow-color-1), inset 0 0 10px var(--glow-color-1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="success-container">
+        <h1>Registration Successful!</h1>
+        <p>Thank you for registering. You can now log in to your account.</p>
+        <a href="{% url 'login' %}"><button>Click Here to Login</button></a>
+    </div>
+
+    <script>
+        // Create floating particles
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = 10 + Math.random() * 20;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        });
+    </script>
+</body>
+</html>

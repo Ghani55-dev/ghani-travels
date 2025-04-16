@@ -1,0 +1,216 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contact</title>
+    <style>
+        body{
+            background-image: url("{% static 'images/360_F_530960431_c8fPd3HansYvrSJ4fJxZqp9OhjQmYoll.jpg' %}");
+        }
+
+.contact-section {
+    padding: 50px;
+    background: #7e80fd48;
+    text-align: center;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+}
+
+.contact-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #f8f4f4;
+    text-shadow:
+    0 0 10px rgb(17, 0, 255),
+    0 0 20px rgb(55, 0, 255),
+    0 0 40px rgb(98, 0, 255),
+    0 0 80px rgb(55, 0, 255);
+}
+
+.contact-section p {
+    font-size: 1.2em;
+    color: #0a0a0a;
+    margin-bottom: 40px;
+}
+
+.contact-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.contact-details {
+    max-width: 400px;
+    text-align: left;
+}
+
+.contact-details h3 {
+    font-size: 1.5em;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.contact-details p {
+    font-size: 1em;
+    color: #faf8f8;
+    margin-bottom: 10px;
+}
+
+.social-media {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.social-media li a {
+    text-decoration: none;
+    color: #ffcc00;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+.social-media li a:hover {
+    color: #e60000;
+}
+
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    font-size: 1rem;
+    color:rgb(7, 7, 7);
+    margin-bottom: 5px;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color:rgb(250, 249, 252);
+    font-size: 1rem;
+    outline: none;
+}
+
+.contact-form input::placeholder, .contact-form textarea::placeholder {
+    color:rgba(56, 56, 55, 0.7);
+}
+
+
+.contact-form button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #ff6f61, #ffcc00);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 111, 97, 0.8);
+}
+
+.messages {
+    margin-bottom: 20px;
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    background: rgba(0, 255, 0, 0.2);
+    border: 1px solid rgba(0, 255, 0, 0.5);
+    color: #00ff00;
+}
+
+.alert-error {
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    color: #ff0000;
+}
+
+    </style>
+</head>
+<body>
+    <section id="contact" class="contact-section">
+        <h2>Contact Us</h2>
+        <p>We are here to assist you with all your travel needs. Feel free to reach out to us through any of the following channels:</p>
+
+        <!-- Display Messages -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="contact-container">
+            <div class="contact-details">
+                <h3>Head Office</h3>
+                <p><strong>Address:</strong> 9-8 Jajireddygudem, Suryapet</p>
+                <p><strong>Phone:</strong> +91-8978941066 | +91-9014066807</p>
+                <p><strong>Email:</strong> info@ghanitravels.com</p>
+                <h3>Business Hours</h3>
+                <p>Monday to Saturday: 9:00 AM - 6:00 PM</p>
+                <p>Sunday: Closed</p>
+                <h3>Follow Us</h3>
+                <ul class="social-media">
+                    <li><a href="https://facebook.com/ghanitravels" target="_blank">Facebook</a></li>
+                    <li><a href="https://twitter.com/ghanitravels" target="_blank">Twitter</a></li>
+                    <li><a href="https://instagram.com/ghanitravels" target="_blank">Instagram</a></li>
+                </ul>
+            </div>
+
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form method="post" action="{% url 'contact_submit' %}">
+                    {% csrf_token %}
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Your Full Name" required>
+                    
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" placeholder="Your Email Address" required>
+                    
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Your Message Here..." required></textarea>
+                    
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+                {% comment %} <b>Submitted Messages</b>
+    <ul>
+        {% for message in messages_list %}
+            <li>
+                <strong>{{ message.name }}</strong> ({{ message.email }})<br>
+                {{ message.message }}<br>
+                <small>{{ message.created_at }}</small>
+            </li>
+        {% endfor %}
+    </ul> {% endcomment %}
+            </div>
+        </div>
+    </section>
+</body>
+    
+</body>
+</html>

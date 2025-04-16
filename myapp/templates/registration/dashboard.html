@@ -1,0 +1,1684 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghani Travels | Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- Particle.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --accent-gradient: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            --danger-gradient: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning-gradient: linear-gradient(135deg, #f46b45 0%, #eea849 100%);
+            --dark-color: #0f172a;
+            --light-color: #f8fafc;
+            --glass-color: rgba(255, 255, 255, 0.2);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+            --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+            --border-radius-3d: 16px;
+            --depth-shadow: 8px 8px 24px rgba(0, 0, 0, 0.2), 
+                           -8px -8px 24px rgba(255, 255, 255, 0.1);
+            --neumorphic-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
+                               -10px -10px 20px rgba(255, 255, 255, 0.05);
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #f1f5f9;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            z-index: -2;
+            opacity: 0.15;
+        }
+        
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+            perspective: 2000px;
+        }
+        
+        /* Glass Morphism Sidebar */
+        .vertical-nav {
+            width: 90px;
+            background: var(--glass-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-right: var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            color: white;
+            transition: var(--transition-smooth);
+            position: relative;
+            z-index: 100;
+            overflow: hidden;
+        }
+        
+        .vertical-nav.expanded {
+            width: 320px;
+        }
+        
+        .vertical-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            z-index: -1;
+            opacity: 0.9;
+        }
+        
+        .nav-header {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        
+        .nav-header:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: var(--transition-smooth);
+            background: linear-gradient(to right, #fff, #c3cfe2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .vertical-nav.expanded .nav-header h2 {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .toggle-icon {
+            font-size: 1.3rem;
+            transition: var(--transition-bounce);
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .vertical-nav.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .nav-content {
+            padding: 1.5rem;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition-smooth);
+        }
+        
+        .vertical-nav.expanded .nav-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom Scrollbar */
+        .nav-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .nav-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .nav-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+        }
+        
+        /* User Profile */
+        .user-profile {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius-3d);
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition-smooth);
+        }
+        
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .user-profile::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            transition: var(--transition-smooth);
+        }
+        
+        .user-profile:hover::before {
+            transform: rotate(0deg);
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            margin: 0 auto 1rem;
+            display: block;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            transition: var(--transition-bounce);
+        }
+        
+        .user-profile:hover .user-avatar {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .user-email {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            white-space: nowrap;
+        }
+        
+        /* 3D Navigation */
+        .nav-container {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: var(--nav-width);
+            height: 100vh;
+            background: var(--nav-bg);
+            box-shadow: 5px 0 15px var(--shadow-color);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .nav-container.collapsed {
+            width: var(--nav-collapsed-width);
+        }
+
+        .nav-container.collapsed .nav-text,
+        .nav-container.collapsed .notification-badge,
+        .nav-container.collapsed .btn-text {
+            display: none;
+        }
+
+        .nav-container.collapsed .nav-link {
+            justify-content: center;
+        }
+
+        .nav-container.collapsed .nav-icon {
+            margin-right: 0;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 20px 0;
+            margin-top: 60px;
+        }
+
+        .nav-item {
+            position: relative;
+            margin: 5px 10px;
+            transform-style: preserve-3d;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover {
+            transform: translateX(5px);
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary-color);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.3s;
+        }
+
+        .nav-item:hover::before {
+            transform: scaleY(1);
+            transform-origin: top;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.5s;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link.active {
+            background: var(--primary-color);
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transform: translateY(-3px);
+        }
+
+        .nav-link.active:hover {
+            background: var(--hover-color);
+        }
+
+        .nav-icon {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .nav-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .notification-badge {
+            position: absolute;
+            right: 15px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            padding: 10px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(255, 71, 87, 0.3);
+        }
+
+        .logout-btn:hover {
+            background: #ff6b81;
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+        }
+
+        .logout-btn i {
+            margin-right: 8px;
+        }
+
+        .btn-text {
+            transition: all 0.3s;
+        }
+        /* Main Content */
+        .content {
+            flex-grow: 1;
+            padding: 2rem;
+            transition: var(--transition-smooth);
+            transform-origin: left center;
+        }
+        
+        .vertical-nav.expanded + .content {
+            transform: perspective(2000px) rotateY(5deg) translateX(10px);
+        }
+        
+        /* Dashboard Header */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .page-title h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            background: linear-gradient(to right, var(--dark-color), #4f46e5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-title h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: var(--accent-gradient);
+            border-radius: 3px;
+        }
+        
+        .page-title p {
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn-notification {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: none;
+            box-shadow: var(--neumorphic-shadow);
+            position: relative;
+            transition: var(--transition-bounce);
+        }
+        
+        .btn-notification:hover {
+            transform: translateY(-5px) rotate(10deg);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .btn-notification::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--danger-gradient);
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        
+        .btn-primary {
+            background: var(--primary-gradient);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+            transition: var(--transition-bounce);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Stats Cards - 3D Effect */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius-3d);
+            padding: 1.8rem;
+            box-shadow: var(--depth-shadow);
+            transition: var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            transform-style: preserve-3d;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 100%);
+            z-index: 1;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 12px 12px 36px rgba(0,0,0,0.25),
+                       -8px -8px 24px rgba(255,255,255,0.1);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            z-index: 2;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1),
+                       -5px -5px 15px rgba(255,255,255,0.5);
+        }
+        
+        .stat-icon.primary {
+            background: var(--primary-gradient);
+            color: white;
+        }
+        
+        .stat-icon.success {
+            background: var(--success-gradient);
+            color: white;
+        }
+        
+        .stat-icon.warning {
+            background: var(--warning-gradient);
+            color: white;
+        }
+        
+        .stat-icon.danger {
+            background: var(--danger-gradient);
+            color: white;
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(to right, var(--dark-color), #4f46e5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Quick Actions - Floating Effect */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .action-btn {
+            background: white;
+            border-radius: var(--border-radius-3d);
+            padding: 1.8rem 1rem;
+            text-align: center;
+            box-shadow: var(--depth-shadow);
+            transition: var(--transition-bounce);
+            cursor: pointer;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: var(--transition-smooth);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 15px 15px 30px rgba(0,0,0,0.2),
+                       -10px -10px 20px rgba(255,255,255,0.1);
+        }
+        
+        .action-btn:hover::before {
+            transform: rotate(0deg);
+        }
+        
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+            position: relative;
+            z-index: 2;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .action-icon.primary {
+            background: var(--primary-gradient);
+        }
+        
+        .action-icon.success {
+            background: var(--success-gradient);
+        }
+        
+        .action-icon.warning {
+            background: var(--warning-gradient);
+        }
+        
+        .action-icon.danger {
+            background: var(--danger-gradient);
+        }
+        
+        .action-icon.accent {
+            background: var(--accent-gradient);
+        }
+        
+        .action-text {
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Recent Bookings - Glass Table */
+        .card {
+            border: none;
+            border-radius: var(--border-radius-3d);
+            box-shadow: var(--depth-shadow);
+            margin-bottom: 3rem;
+            background: white;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: var(--transition-smooth);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background: white;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent);
+        }
+        
+        .card-title {
+            font-weight: 700;
+            margin: 0;
+            font-size: 1.4rem;
+            background: linear-gradient(to right, var(--dark-color), #4f46e5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .table {
+            margin-bottom: 0;
+            background: transparent;
+        }
+        
+        .table th {
+            border-top: none;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            padding: 1.2rem 1.5rem;
+            background: rgba(241, 245, 249, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        
+        .table td {
+            vertical-align: middle;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+        }
+        
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .table tr:hover td {
+            background: rgba(241, 245, 249, 0.5);
+        }
+        
+        .table tr:hover td::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary-gradient);
+        }
+        
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-badge::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .status-badge.confirmed {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #11998e;
+        }
+        
+        .status-badge.confirmed::before {
+            background: var(--success-gradient);
+        }
+        
+        .status-badge.pending {
+            background-color: rgba(248, 150, 30, 0.1);
+            color: #f46b45;
+        }
+        
+        .status-badge.pending::before {
+            background: var(--warning-gradient);
+        }
+        
+        .status-badge.cancelled {
+            background-color: rgba(230, 57, 70, 0.1);
+            color: #ff416c;
+        }
+        
+        .status-badge.cancelled::before {
+            background: var(--danger-gradient);
+        }
+        
+        .btn-view {
+            background: rgba(67, 97, 234, 0.1);
+            color: #667eea;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition-bounce);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-view:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Popular Packages - 3D Flip Cards */
+        .packages-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .packages-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40%;
+            height: 4px;
+            background: var(--accent-gradient);
+            border-radius: 4px;
+        }
+        
+        .packages-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .package-card {
+            border-radius: var(--border-radius-3d);
+            overflow: hidden;
+            box-shadow: var(--depth-shadow);
+            transition: var(--transition-bounce);
+            background: white;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 15px 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .package-img-container {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .package-img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+        
+        .package-card:hover .package-img {
+            transform: scale(1.1);
+        }
+        
+        .package-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--danger-gradient);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(255, 65, 108, 0.3);
+            z-index: 2;
+        }
+        
+        .package-body {
+            padding: 1.8rem;
+            position: relative;
+        }
+        
+        .package-title {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+            color: var(--dark-color);
+        }
+        
+        .package-location {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .package-price {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .package-price span {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+        
+        .package-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .package-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .btn-book {
+            width: 100%;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: var(--transition-bounce);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-book:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 25px rgba(67, 206, 162, 0.3);
+            z-index: 100;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            border: none;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 15px 30px rgba(67, 206, 162, 0.4);
+        }
+        
+        /* Animated Waves */
+        .wave-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            height: 100px;
+            margin-top: -100px;
+            z-index: 1;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23ffffff" opacity=".25"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%23ffffff" opacity=".5"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ffffff"/></svg>');
+            background-repeat: repeat no-repeat;
+            background-position: 0 bottom;
+            background-size: 50% 100px;
+            animation: wave 15s linear infinite;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: var(--transition-bounce);
+        }
+        
+        .mobile-menu-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .vertical-nav {
+                width: 0;
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                z-index: 1000;
+            }
+            
+            .vertical-nav.expanded {
+                width: 280px;
+            }
+            
+            .content {
+                margin-left: 0 !important;
+                padding: 1.5rem;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .user-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .packages-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .content {
+                padding: 1.5rem 1rem;
+            }
+            
+            .page-title h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <div class="main-container">
+        <!-- Glass Morphism Sidebar -->
+        <nav class="vertical-nav" id="verticalNav">
+            <div class="nav-header" onclick="toggleNav()">
+                <h2>Ghani Travels</h2>
+                <span class="toggle-icon"><i class="fas fa-chevron-left"></i></span>
+            </div>
+            
+            <div class="nav-content">
+                <!-- User Profile -->
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&background=random" alt="User" class="user-avatar">
+                    <h3 class="user-name">{{ user.first_name }} {{ user.last_name }}</h3>
+                    <p class="user-email">{{ user.email }}</p>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <span class="nav-icon"><i class="fas fa-home"></i></span>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'tour-list' %}" class="nav-link">
+                            <span class="nav-icon"><i class="fas fa-map-marked-alt"></i></span>
+                            <span class="nav-text">Tour Packages</span>
+                            <span class="notification-badge">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'generate_ticket' booking_id=1 %}" class="nav-link">
+                            <span class="nav-icon"><i class="fas fa-ticket-alt"></i></span>
+                            <span class="nav-text">My Bookings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'payment_page' %}" class="nav-link">
+                            <span class="nav-icon"><i class="fas fa-credit-card"></i></span>
+                            <span class="nav-text">Payments</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'contact' %}" class="nav-link">
+                            <span class="nav-icon"><i class="fas fa-comments"></i></span>
+                            <span class="nav-text">Support</span>
+                            <span class="notification-badge">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'add_review' package_id=1 %}" class="nav-link">
+                            <span class="nav-icon"><i class="fas fa-star"></i></span>
+                            <span class="nav-text">Reviews</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon"><i class="fas fa-cog"></i></span>
+                            <span class="nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Logout Button -->
+                <form method="post" action="{% url 'logout' %}" class="mt-4">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger w-100">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header animate__animated animate__fadeIn">
+                <div class="page-title">
+                    <h1>Welcome To Ghani Travels, {{ user.first_name }}!</h1>
+                    <p>Here's what's Happening with your travel plans</p>
+                </div>
+                <div class="user-actions">
+                    <button class="btn-notification">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <button class="btn-primary" onclick="location.href='{% url 'book_package' %}'">
+                        <i class="fas fa-plus"></i> New Booking
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+<div class="stats-container">
+    <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+        <div class="stat-icon primary">
+            <i class="fas fa-suitcase"></i>
+        </div>
+        <h3 class="stat-value">{{ total_bookings }}</h3>
+        <p class="stat-label">Total Bookings</p>
+    </div>
+    <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+        <div class="stat-icon success">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 class="stat-value">{{ confirmed_bookings }}</h3>
+        <p class="stat-label">Confirmed</p>
+    </div>
+    <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+        <div class="stat-icon warning">
+            <i class="fas fa-clock"></i>
+        </div>
+        <h3 class="stat-value">{{ pending_bookings }}</h3>
+        <p class="stat-label">Pending</p>
+    </div>
+    <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+        <div class="stat-icon danger">
+            <i class="fas fa-times-circle"></i>
+        </div>
+        <h3 class="stat-value">{{ cancelled_bookings }}</h3>
+        <p class="stat-label">Cancelled</p>
+    </div>
+</div>
+            
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button class="action-btn animate__animated animate__fadeIn" style="animation-delay: 0.2s" onclick="location.href='{% url 'book_package' %}'">
+                    <div class="action-icon primary">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <span class="action-text">Book a Tour</span>
+                </button>
+                <button class="action-btn animate__animated animate__fadeIn" style="animation-delay: 0.3s" onclick="location.href='{% url 'payment_page' %}'">
+                    <div class="action-icon success">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <span class="action-text">Make Payment</span>
+                </button>
+                <button class="action-btn animate__animated animate__fadeIn" style="animation-delay: 0.4s" onclick="location.href='{% url 'view_ticket' %}'">
+                    <div class="action-icon warning">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <span class="action-text">View Tickets</span>
+                </button>
+                <button class="action-btn animate__animated animate__fadeIn" style="animation-delay: 0.5s" onclick="location.href='{% url 'chat_interface' %}'">
+                    <div class="action-icon danger">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <span class="action-text">Support</span>
+                </button>
+                <button class="action-btn animate__animated animate__fadeIn" style="animation-delay: 0.6s" onclick="location.href='{% url 'add_review' package_id=1 %}'">
+                    <div class="action-icon accent">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span class="action-text">Write Review</span>
+                </button>
+            </div>
+            
+            <!-- Recent Bookings -->
+            <div class="card animate__animated animate__fadeIn">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Bookings</h2>
+                    {% comment %} <a href="{% url 'generate_ticket' booking_id=1 %}" class="btn btn-sm btn-outline-primary">View All</a> {% endcomment %}
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tour</th>
+                                    <th>Travelers</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if bookings %}
+                                    {% for booking in bookings|slice:":5" %}
+                                    <tr class="animate__animated animate__fadeIn" style="animation-delay: {{ forloop.counter|add:"2"|divisibleby:10 }}s">
+                                        <td>
+                                            <strong>{{ booking.tour_package.title }}</strong><br>
+                                            <small class="text-muted">{{ booking.booking_date|date:"M d, Y" }}</small>
+                                        </td>
+                                       
+                                        <td>{{ booking.travelers }}</td>
+                                        <td>INR {{ booking.total_price }}</td>
+                                        <td>
+                                            <span class="status-badge {% if booking.status == 'confirmed' %}confirmed{% elif booking.status == 'pending' %}pending{% else %}cancelled{% endif %}">
+                                                {{ booking.status|title }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button class="btn-view">
+                                                <i class="fas fa-eye me-1"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4">No bookings found</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Popular Packages -->
+            <h3 class="packages-title animate__animated animate__fadeIn">Featured Tour Packages</h3>
+            <div class="packages-container">
+                {% if tour_packages %}
+                    {% for package in tour_packages|slice:":3" %}
+                    <div class="package-card animate__animated animate__fadeInUp" >
+                        <div class="package-img-container">
+                            <img src="https://picsum.photos/600/400?random=1" alt="Random Image,{{ package.destination|lower }}" alt="{{ package.title }}" class="package-img">
+                            <span class="package-badge">Popular</span>
+                        </div>
+                        <div class="package-body">
+                            <h4 class="package-title">{{ package.title }}</h4>
+                            <p class="package-location">
+                                <i class="fas fa-map-marker-alt"></i> {{ package.destination }}
+                            </p>
+                            <div class="package-price">
+                                INR {{ package.price }} <span>per person</span>
+                            </div>
+                            <div class="package-meta">
+                                <span><i class="fas fa-calendar-alt"></i> {{ package.duration }} days</span>
+                                <span><i class="fas fa-users"></i> {{ package.capacity }} spots</span>
+                            </div>
+                            <button class="btn-book" onclick="location.href='{% url 'book_package'%}'">
+                                <i class="fas fa-shopping-cart me-1"></i> Book Now
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="alert alert-info">No tour packages available at the moment.</div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Action Button -->
+    <button class="fab animate__animated animate__bounceIn" style="animation-delay: 1s">
+        <i class="fas fa-plus"></i>
+    </button>
+    
+    <!-- Animated Waves -->
+    <div class="wave-container">
+        <div class="wave"></div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": ["#667eea", "#764ba2", "#6B46C1", "#553C9A"]
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#667eea",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+            
+            // Initialize sidebar state
+            const nav = document.getElementById('verticalNav');
+            const savedState = localStorage.getItem('sidebarExpanded');
+            
+            if (savedState === 'true') {
+                nav.classList.add('expanded');
+            } else if (window.innerWidth > 992) {
+                // Default to expanded on larger screens
+                nav.classList.add('expanded');
+            }
+            
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            mobileMenuToggle.addEventListener('click', function() {
+                nav.classList.toggle('expanded');
+                
+                // Save state in localStorage
+                const isExpanded = nav.classList.contains('expanded');
+                localStorage.setItem('sidebarExpanded', isExpanded);
+                
+                // Change icon based on state
+                const icon = this.querySelector('i');
+                if (nav.classList.contains('expanded')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        });
+        
+        // Toggle sidebar navigation
+        function toggleNav() {
+            const nav = document.getElementById('verticalNav');
+            nav.classList.toggle('expanded');
+            
+            // Save state in localStorage
+            const isExpanded = nav.classList.contains('expanded');
+            localStorage.setItem('sidebarExpanded', isExpanded);
+            
+            // Update mobile menu icon if visible
+            if (window.innerWidth <= 992) {
+                const mobileToggle = document.getElementById('mobileMenuToggle');
+                const icon = mobileToggle.querySelector('i');
+                if (isExpanded) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
+        }
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('verticalNav');
+            const mobileToggle = document.getElementById('mobileMenuToggle');
+            
+            if (window.innerWidth <= 992 && 
+                !nav.contains(event.target) && 
+                !mobileToggle.contains(event.target) &&
+                nav.classList.contains('expanded')) {
+                nav.classList.remove('expanded');
+                localStorage.setItem('sidebarExpanded', 'false');
+                
+                // Update mobile menu icon
+                const icon = mobileToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Add ripple effect to buttons
+        document.querySelectorAll('.btn, .action-btn, .nav-link').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const x = e.clientX - e.target.getBoundingClientRect().left;
+                const y = e.clientY - e.target.getBoundingClientRect().top;
+                
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 1000);
+            });
+        });
+        
+        // Animate elements when they come into view
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate__animated');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    const animationClass = element.classList.item(1);
+                    element.classList.add(animationClass);
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Run once on page load
+        
+        // Floating action button click handler
+        document.querySelector('.fab').addEventListener('click', function() {
+            // Create a cool bubble effect
+            for (let i = 0; i < 5; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.width = `${Math.random() * 20 + 10}px`;
+                bubble.style.height = bubble.style.width;
+                bubble.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                document.body.appendChild(bubble);
+                
+                setTimeout(() => {
+                    bubble.remove();
+                }, 3000);
+            }
+            
+            // Open booking modal or perform action
+            location.href = '{% url 'book_package' %}';
+        });
+    </script>
+</body>
+</html>

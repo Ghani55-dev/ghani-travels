@@ -1,0 +1,238 @@
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .review-container {
+        max-width: 700px;
+        width: 90%;
+        margin: 2rem auto;
+        padding: 2.5rem;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 25px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .review-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+        transform: rotate(45deg);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes slideUp {
+        0% { transform: translateY(100px) scale(0.9); opacity: 0; }
+        100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) rotate(45deg); }
+    }
+
+    h2 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-weight: 600;
+        position: relative;
+        font-size: 2.2rem;
+    }
+
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 2px;
+    }
+
+    .review-form {
+        position: relative;
+        z-index: 2;
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 1.5rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-control:focus {
+        border-color:rgb(127, 73, 235);
+        box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
+        background: white;
+    }
+
+    .rating-container {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin: 2.5rem 0;
+    }
+
+    .rating-container label {
+        font-size: 2.5rem;
+        cursor: pointer;
+        color: #e0e0e0;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        position: relative;
+    }
+
+    .rating-container label:hover {
+        transform: scale(1.3) rotate(15deg);
+        color: #ff9a9e;
+    }
+
+    .rating-container input:checked ~ label {
+        color: #ff5733;
+        transform: scale(1.4);
+        filter: drop-shadow(0 0 5px rgba(255, 87, 51, 0.5));
+    }
+
+    .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 1.2rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-submit::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
+        transform: rotate(45deg);
+        transition: all 0.5s ease;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-submit:hover::after {
+        animation: shine 1.5s;
+    }
+
+    .btn-submit i {
+        margin-right: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .btn-submit:hover i {
+        transform: translateX(5px);
+    }
+
+    @media (max-width: 768px) {
+        .review-container {
+            padding: 1.8rem;
+            border-radius: 20px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+        }
+        
+        .rating-container label {
+            font-size: 2rem;
+        }
+    }
+
+    textarea {
+        resize: none;
+        min-height: 150px;
+    }
+</style>
+
+<div class="review-container">
+    <h2>Review {{ package.title }}</h2>
+    <form method="post" class="review-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <div class="rating-container">
+                {% for i in "12345" %}
+                    <input type="radio" name="rating" value="{{ i }}" id="star{{ i }}" class="rating-input">
+                    <label for="star{{ i }}" class="rating-star">★</label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <textarea 
+                name="{{ form.comment.name }}" 
+                id="{{ form.comment.id_for_label }}" 
+                class="form-control" 
+                placeholder="Share your experience..."
+                rows="4"
+                required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">
+            <i class="fas fa-paper-plane"></i> Submit Review
+        </button>
+    </form>
+</div>
+
+<script>
+    document.querySelectorAll('.rating-star').forEach((star, index) => {
+        star.dataset.value = 1 + index;
+        star.addEventListener('click', (e) => {
+            const ratingValue = e.target.dataset.value;
+            document.querySelectorAll('.rating-star').forEach(s => {
+                const starValue = s.dataset.value;
+                s.style.color = starValue <= ratingValue ? '#ff5733' : '#e0e0e0';
+                s.style.transform = starValue <= ratingValue ? 'scale(1.4)' : 'scale(1)';
+            });
+        });
+    });
+</script>
+
+{% endblock %}

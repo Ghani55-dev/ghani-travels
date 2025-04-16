@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghani Travels - Package Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+            color: #333;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .btn-custom {
+            background-color: #ff5733;
+            color: white;
+            border-radius: 25px;
+            padding: 10px 20px;
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-custom:hover {
+            background-color: #c70039;
+            transform: scale(1.1);
+        }
+        .header-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center header-title">Ghani Travels - Package Details</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card p-4">
+                    <h5 class="text-primary">🗺️ Destination: Goa</h5>
+                    <p>⏳ Duration: 5 Days</p>
+                    <p>💰 Price: ₹25,000 per person</p>
+                    <p>📅 Available From: March 1, 2025</p>
+                    <div class="text-center">
+                        <a href="#" class="btn btn-custom">Book Now</a>
+                    </div>
+                </div>
+                <div class="card p-4 mt-4">
+                    <h5 class="text-success">Reviews</h5>
+                    <p><strong>Ganagani Ganesh</strong> - ★★★★☆</p>
+                    <p>"Amazing experience! Keep it up."</p>
+                    <p><strong>Rahul Sharma</strong> - ★★★★★</p>
+                    <p>"Best trip ever! Highly recommend!"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

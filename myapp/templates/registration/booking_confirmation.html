@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Container Styles */
+        .container {
+            max-width: 600px;
+            padding: 30px;
+            border: 2px solid rgba(59, 130, 246, 0.6);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            animation: neonBorder 3s infinite, glow 3s infinite;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+        }
+
+        @keyframes neonBorder {
+            0% { border-color: rgba(59, 130, 246, 0.6); }
+            50% { border-color: rgba(59, 130, 246, 0.8); }
+            100% { border-color: rgba(59, 130, 246, 0.6); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+        }
+
+        /* Heading Styles */
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color:rgb(8, 250, 0);
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+        }
+
+        /* Details Styles */
+        .details p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+        }
+
+        .details p strong {
+            color:rgb(253, 116, 4);
+        }
+
+        /* Status Styles */
+        .status {
+            font-weight: bold;
+            color:rgb(27, 253, 35);
+            text-shadow: 0 0 10px rgb(14, 2, 117);
+        }
+
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        /* Grid Background Animation */
+        .grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+            animation: moveGrid 10s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+        /* Card container */
+.card {
+    background:rgba(46, 45, 153, 0.56);
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Card hover effect */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Shadow utility (if not provided by a framework) */
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+}
+
+/* Text center utility */
+.text-center {
+    text-align: center;
+}
+
+/* Padding utility */
+.p-4 {
+    padding: 1.5rem !important;
+}
+
+/* Icon styling */
+.fas.fa-credit-card {
+    font-size: 3rem;
+    color: #007bff; /* Primary color */
+}
+
+/* Margin utility for heading */
+.mt-3 {
+    margin-top: 1rem !important;
+}
+
+/* Custom button styling */
+.btn-custom {
+    background-color: #007bff;
+    border: none;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Button hover effect */
+.btn-custom:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+    </style>
+</head>
+<body>
+    <!-- Grid Background -->
+    <div class="grid-background"></div>
+
+    <!-- Booking Confirmation Container -->
+    <div class="container">
+        <h2>Booking Confirmation</h2>
+
+        <div class="details">
+            <p><strong>Booking ID:</strong> {{ booking.id }}</p>
+            <p><strong>Customer:</strong> {{ booking.user.first_name }} {{ booking.user.last_name }}</p>
+            <p><strong>Tour Package:</strong> {{ booking.tour_package.title }}</p>
+            <p><strong>Booking Date:</strong> {{ booking.booking_date }}</p>
+            <p><strong>Start Date:</strong> {{ booking.start_date }}</p>
+            <p><strong>End Date:</strong> {{ booking.end_date }}</p>
+            <p><strong>Passengers:</strong> {{ booking.passengers }}</p>
+            <p><strong>Travelers:</strong> {{ booking.travelers }}</p>
+            <p><strong>Total Price:</strong>₹ {{ booking.total_price }}</p>
+            <p><strong>Special Requests:</strong> {{ booking.special_requests|default:"None" }}</p>
+            <p><strong>Status:</strong> <span class="status">{{ booking.get_status_display }}</span></p>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm text-center p-4">
+                    <i class="fas fa-credit-card fa-3x text-primary"></i>
+                    <h5 class="mt-3">Make a Payment to confirm the ticket</h5>
+                    <a href="{% url 'payment_page' %}" class="btn btn-primary btn-custom">Proceed to Payment</a>
+                </div>
+            </div>
+        </div>
+
+        <p class="footer">Thank you for booking with Ghani Travels!</p>
+    </div>
+</body>
+</html>

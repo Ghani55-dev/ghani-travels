@@ -1,0 +1,179 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    background: linear-gradient(135deg, #004080, #003366);
+    background-image: url("{% static 'images/pngtree-transportation-airplane-bicycle-cars-photo-picture-image_6703777.jpg' %}");
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #002244;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+header .logo span {
+    color: #ff5500;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+header nav a:hover{
+    color: #ff5500;
+    text-decoration: none;
+    
+}
+
+header .search-bar {
+    display: flex;
+    gap: 5px;
+}
+
+header .search-bar input {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+}
+
+header .search-bar button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #ff5500;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.hero {
+    max-width: 60%;
+}
+
+.hero h1 {
+    font-size: 36px;
+    color: white;
+}
+
+.hero h1 span {
+    color: #ff5500;
+}
+
+.hero p {
+    margin: 10px 0 20px;
+}
+.hero a{
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(253, 249, 249);
+}
+.hero a:hover{
+    color: #21b903;
+}
+
+.hero button {
+    background-color: #ff5500;
+    color: rgb(255, 253, 253);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.hero button:hover{
+    background-color: #000000;
+}
+
+.login-section {
+    background: #00000067;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 30%;
+    text-align: center;
+    margin-top: 8%;
+    margin-right: 10%;
+}
+
+.login-section h2 {
+    margin-bottom: 20px;
+}
+
+.login-section input {
+    border: solid;
+    font-weight: bold;
+    background:none;
+    display:block;
+    margin: 20px auto;
+    text-align: center;
+    border: 3px solid rgb(32, 0, 211);
+    padding: 10px 40px;
+    outline: none;
+    color: rgb(14, 14, 14);
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor:pointer;
+}
+.login-section input::placeholder{
+    color: antiquewhite;
+}
+.login-section input[type="email"]:focus,.login-section input[type = "password"]:focus{
+    width: 200px;
+    border-color: rgb(24, 204, 24);
+    font-size: 15px;
+}
+
+.login-section button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ff5500;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-section a {
+    color: #ff5500;
+    text-decoration: none;
+    font-weight: bold;
+}
+.login-section a:hover {
+    color: #1100ff;
+    text-decoration: dotted;
+}
+.login-section a:active {
+    color: #ff0000;
+    text-decoration: none;
+}
+.login-section button:hover{
+    color: rgb(255, 255, 255);
+    background-color: blue;
+}
+
+.social-login a {
+    display: inline-block;
+    margin: 5px;
+    color: white;
+    text-decoration: none;
+}
