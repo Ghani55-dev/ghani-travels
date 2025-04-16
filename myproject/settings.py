@@ -2,6 +2,11 @@ from pathlib import Path
 import os
 import openai
 
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Load environment variables from .env file
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -107,11 +112,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
 ]
 
-# Stripe Configuration (optional)
-# STRIPE_PUBLIC_KEY = 'your_publishable_key'
-# STRIPE_SECRET_KEY = 'your_secret_key'
-# STRIPE_WEBHOOK_SECRET = 'your_webhook_secret'
-
 
 # Custom error handlers (optional)
 handler404 = 'myapp.views.handler404' 
@@ -145,18 +145,9 @@ LOGGING = {
 }
 
 
-
-#Allauth configuration (optional)
-# INSTALLED_APPS += ['allauth', 'allauth.account', 'allauth.socialaccount']
-# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-# ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_UNIQUE_EMAIL = True
-# ACCOUNT_USERNAME_REQUIRED = False
-
 # Stripe Test Keys (optional)
 STRIPE_TEST_PUBLIC_KEY = 'pk_test_51R7KP9P6E8Ea1jTc1WvcBRxwbu7pEXqObeDlZVY6761a67ysh4J2A4WSvzduarAiPL7WooUpapgE7ybDM482v7mK00iXPHL3aF'
-STRIPE_TEST_SECRET_KEY = 'sk_test_51R7KP9P6E8Ea1jTcKUICQSFW3hn7V37c1gchX30XKIZLOTRVGVeULEjQ5PeIQeEjKxCJZVtuGIXT7dhXQsEeefl400ZbbAagA8'
+STRIPE_TEST_SECRET_KEY = os.getenv('sk_test_51R7KP9P6E8Ea1jTcKUICQSFW3hn7V37c1gchX30XKIZLOTRVGVeULEjQ5PeIQeEjKxCJZVtuGIXT7dhXQsEeefl400ZbbAagA8')
 STRIPE_TEST_WEBHOOK_SECRET = ' whsec_f914a26f0083d8ad771866fecd9bf62057ed52e1b4de83d26e6c62f3630b6bd4'
 DEFAULT_FROM_EMAIL = 'ganaganiganesh5268@gmail.com'
 
@@ -171,7 +162,7 @@ TICKET_PRICES = {
 }
 
 # OpenAI API Key (optional)
-OPENAI_API_KEY = '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'
+OPENAI_API_KEY = os.getenv('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')
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
