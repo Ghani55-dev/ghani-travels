@@ -57,7 +57,6 @@ python-http-client==3.3.7
 pyttsx3==2.98
 pytweening==1.2.0
 pywhatkit==5.4
-pywin32==308
 qrcode==8.0
 reportlab==4.2.5
 requests==2.32.3
