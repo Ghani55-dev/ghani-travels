@@ -1,3 +1,16 @@
+# Ignore environment variables
 .env
+
+# Bytecode
 __pycache__/
-*.pyc
+*.py[cod]
+
+# SQLite database
+*.sqlite3
+
+# VSCode
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
