@@ -16,7 +16,7 @@
                             💰 <span class="highlight">Price:</span> ₹{{ package.price }} per person<br>
                             📅 <span class="highlight">Available From:</span> {{ package.start_date|date:"F j, Y" }}
                         </p>
-                        <button class="btn-neon"><a href="{% url 'book_package' package.id %}" class="link-3d">Book Now</a></button>
+                        <button class="btn-neon"><a href="{% url 'book_package' %}" class="link-3d">Book Now</a></button>
                         <button class="btn-neon"><a href="{% url 'add_review' package.id %}" class="link-3d">Write a Review</a></button>
                     </div>
                 </div>
